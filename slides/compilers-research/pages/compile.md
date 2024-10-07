@@ -1,0 +1,4 @@
+---
+layout: section
+---
+# Compiling Rust
