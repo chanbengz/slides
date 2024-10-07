@@ -6,7 +6,7 @@ drawings:
 transition: slide-left
 mdc: true
 overviewSnapshots: true
-background: /ferris.jpg
+background: ferris.jpg
 ---
 # Rust: Title
 <br>
