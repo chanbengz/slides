@@ -8,7 +8,10 @@ mdc: true
 overviewSnapshots: true
 background: ferris.jpg
 ---
-# Rust: Title
+# In Rust We Trust
+<br>
+<br>
+<br>
 <br>
 肖翊成，朱家润，陈贲
 
@@ -20,19 +23,15 @@ layoutClass: gap-16
 <Toc v-click minDepth="1" maxDepth="2" columns="2"></Toc>
 
 ---
-src: ./pages/compile.md
----
-
----
-src: ./pages/fp.md
----
-
----
-src: ./pages/zjr.md
+src: ./pages/intro.md
 ---
 
 ---
 src: ./pages/lifetime.md
+---
+
+---
+src: ./pages/compiler.md
 ---
 
 ---
