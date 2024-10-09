@@ -6,9 +6,9 @@ drawings:
 transition: slide-left
 mdc: true
 overviewSnapshots: true
-background: /ferris.jpg
+background: ferris.jpg
 ---
-# Rust: Title
+# Rust: From a Compiler's Perspective
 <br>
 肖翊成，朱家润，陈贲
 
@@ -24,15 +24,15 @@ src: ./pages/compile.md
 ---
 
 ---
+src: ./pages/lifetime.md
+---
+
+---
 src: ./pages/fp.md
 ---
 
 ---
 src: ./pages/zjr.md
----
-
----
-src: ./pages/lifetime.md
 ---
 
 ---
