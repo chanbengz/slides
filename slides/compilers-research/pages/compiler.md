@@ -12,7 +12,7 @@ When we talk about Rust, we refer to words like **memory safety**, **efficiency*
 ### What makes Rust different from other languages?
 Rust Compiler `rustc` may give you the answers.
 <v-click> 
-<li> 🛠 It has a very powerful frontend system whereas the backend is backed up by the famous <span v-mark.underline.orange="2">LLVM</span>. (The same backend for compilers like clang/intel DPC/C++ compilers)</li>
+<li> 🛠 It has a very powerful frontend system whereas the backend is backed up by the famous <span v-mark.underline.orange="1">LLVM</span>. (The same backend for compilers like clang/intel DPC/C++ compilers)</li>
 <li> 🤔 The explicit definition of ownership enables the compiler to perform <span v-mark.underline.orange="2">static analysis</span> on the code, resolving issues only using frontend. </li>
 </v-click>
 ---
