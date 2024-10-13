@@ -150,3 +150,136 @@ fn main() {
 <v-click>
 <b>Assignment</b> is the act of writing a value into the memory region associated with a variable, while <b>binding</b> is the process of establishing the relationship between a variable and a memory region. In Rust, this also involves transferring ownership of that memory region to the variable.
 </v-click>
+
+---
+level: 2
+---
+# Ownership Transfer and Borrowing
+Transfer or Borrow?
+
+With binding concepts, Rust transfers ownership of a memory region to a variable. This transfer is called **ownership transfer**. Transfer of ownership avoids copying the data, which will be more efficient. If we just want to use the data without transferring ownership, we can borrow the data. This is called **borrowing**.
+
+````md magic-move {lines: true}
+```rust
+fn main() {
+    let a = 1;
+    let b = a; // Ownership transfer
+    println!("a:{}",a); /* Error: use of moved value: `a` */
+    println!("b:{}",b); /* 1 */
+}
+```
+
+```rust
+fn main() {
+    let mut a = 1;
+    let im_ref = &a;        // Unmutable borrowing
+    let mut_ref = & mut a;  // Mutable borrowing
+    println!("{}",im_ref.v); 
+    //[At line 4] error[E0502]: cannot borrow `a` as mutable because it is also borrowed as immutable
+}
+```
+
+```rust
+fn main() {
+    let mut a = 1;
+    let im_ref = &a;        // Unmutable borrowing
+    let mut_ref = & mut a;  // Mutable borrowing
+    println!("{}",f.v);
+    println!("{}",mut_ref.v); 
+    //[At line 5] error[E0507]: cannot move out of `a` because it is borrowed
+}
+```
+````
+<div v-click="2">
+In the first example, the ownership of <code>a</code> is transferred to <code>b</code>. Therefore, <code>a</code> cannot be used after the transfer. In the second example, <code>im_ref</code> and <code>mut_ref</code> are borrowed from <code>a</code>. The ownership of <code>a</code> is not transferred, so <code>a</code> can still be used. However, <code>mut_ref</code> cannot be used before <code>im_ref</code> is released. 
+</div>
+<div v-click="3">
+In Rust, the compiler checks for ownership transfer and borrowing. If the code violates these rules, the compiler will throw an error. This is called <span v-mark.underline.orange="2">static analysis</span>.
+</div>
+
+---
+level: 2
+---
+# Lifetime
+How long does the data live? How does Rust compiler analyze it?
+
+The lifecycle of a variable is mainly related to its scope, and in most programming languages, it is implicitly defined. In Rust, however, you can explicitly declare the lifetime parameters of variables, which is a very unique design. This syntactic feature is something that is rarely seen in other languages.
+    
+````md magic-move {lines: true}
+```rust
+struct V{v:i32}
+ 
+fn bad_fn() -> &V{ 
+    let a = V{v:10};
+    &a
+}
+
+fn main(){
+    let res = bad_fn();   
+}
+// [At line 3] error[E0106]: missing lifetime specifier
+```
+
+```rust
+struct V{v:i32}
+
+fn bad_fn<'a>() -> &'a V{
+    let a = V{v:10};
+    let ref_a = &a;
+    ref_a   
+}
+
+fn main(){
+    let res = bad_fn();   
+}
+// [At line 6] error[E0515]: cannot return reference to local variable `a` -> Dangling pointer
+```
+````
+<v-switch>
+<template #1> The <code>'a</code> lifetime parameter in Rust specifies the required lifespan of a reference returned by a function, ensuring that the returned reference is valid within the caller's context. </template>
+<template #2><code>'a</code> imposes a requirement on the reference returned within the function body: the data referred to by the returned reference must have a lifetime at least as long as <code>'a</code>, meaning it must last at least as long as the variable in the caller context that receives the return value. </template>
+</v-switch>
+
+---
+level: 2
+---
+# More about Lifetime
+
+<v-switch>
+<template #1>
+
+## Static Lifetime
+```rust
+fn get_str<'a>() -> &'a str { // Also can be written as <'static>
+    let s = "hello";
+    s
+}
+```
+In this case, the lifetime of the string <code>s</code> is static, meaning it lasts for the entire program execution. The lifetime of the string is not bound by any specific scope.
+
+</template>
+<template #2>
+
+## Lifetime in function
+
+```rust
+fn echo<'a, 'b>(content: &'b str) -> &'a str {
+    content // 编译错误：引用变量本身的生命周期超过了它的借用目标
+}
+fn longer<'a, 'b>(s1: &'a str, s2: &'b str) -> &'a str {
+    if s1.len() > s2.len()
+        { s1 }
+    else
+        { s2 }//编译错误：生命周期不匹配
+}
+
+```
+
+
+</template>
+<template #3>
+
+## Lifetime in struct
+
+</template>
+</v-switch>
