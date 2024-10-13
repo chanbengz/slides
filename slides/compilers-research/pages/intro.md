@@ -33,7 +33,7 @@ Kills the Bugs $\rightarrow$ Kills the Programmers who write Bugs.
 
 
 <div align=center>
-<img src="./fRustacean.webp" width="300"/>
+<img src="/public/fRustacean.webp" width="300"/>
 </div>
 
 </v-click>
@@ -43,7 +43,7 @@ Kills the Bugs $\rightarrow$ Kills the Programmers who write Bugs.
 <v-click>
 
 <div align=center>
-<img src="./writing_about_rust.jpg" width="300"/>
+<img src="/public/writing_about_rust.jpg" width="300"/>
 </div>
 
 </v-click>
