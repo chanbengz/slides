@@ -29,24 +29,24 @@ Kills the Bugs $\rightarrow$ Kills the Programmers who write Bugs.
 
 ::right::
 
-<v-click>
-
-
-<div align=center>
-<img src="/public/fRustacean.webp" width="300"/>
-</div>
-
-</v-click>
-
-<br>
-
-<v-click>
-
-<div align=center>
-<img src="/public/writing_about_rust.jpg" width="300"/>
-</div>
-
-</v-click>
+<!--<v-click>-->
+<!---->
+<!---->
+<!--<div align=center>-->
+<!--<img src="./fRustacean.webp" width="300"/>-->
+<!--</div>-->
+<!---->
+<!--</v-click>-->
+<!---->
+<!--<br>-->
+<!---->
+<!--<v-click>-->
+<!---->
+<!--<div align=center>-->
+<!--<img src="./writing_about_rust.jpg" width="300"/>-->
+<!--</div>-->
+<!---->
+<!--</v-click>-->
 
 ---
 level: 2
