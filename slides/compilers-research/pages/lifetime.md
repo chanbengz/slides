@@ -200,6 +200,105 @@ In Rust, the compiler checks for ownership transfer and borrowing. If the code v
 ---
 level: 2
 ---
+# Borrow Checker in Rust Compilers
+ref: [Rust Compiler Development Guide](https://rustc-dev-guide.rust-lang.org/borrow_check.html) 
+
+<v-switch>
+
+<template #1>
+The borrow checker operates on the MIR, an older implementation operated on the HIR.
+
+```mermaid {scale: 0.4, alt: 'A simple sequence diagram'}
+%%{init: {"flowchart": {"htmlLabels": false}} }%%
+flowchart LR
+    %% Main Stages %%
+    A[Invocation] --> B[Lexing]
+    B -->|TokenStream| C[Parsing]
+    C -->|AST| D[HIR]
+    D -->|Type Inferencing
+      Type Checking| E[MIR]
+    E -->|Borrow Checking
+      Optimization| F[LLVM IR]
+    F -->|Backend| G[LLVM Backend]
+    G --> H[Executable]
+
+    %% Frontend %%
+    subgraph Frontend [**Frontend**]
+        B
+        C
+        D
+        E
+        F
+    end
+
+    %% Backend %%
+    subgraph Backend [**Backend**]
+      direction TB
+        G
+    end
+
+    I[Procedural Macros] --> |TokenStream| M{Type?}
+    M --> |Procedural Macro| N[AST]
+    N --> O[TokenStream]
+    M --> |Declarative Macro| O[TokenStream]
+
+    %% Macro Handler %%
+    subgraph MacroHandler [**Macro Handler**]
+      direction TB
+        I
+        M
+        N
+        O
+    end
+
+    %% Connect Macro Handlers to Main Flow %%
+    MacroHandler --> C
+```
+</template>
+<template #2>
+
+The borrow checker source is located in the [`rustc_borrowck`](https://doc.rust-lang.org/nightly/nightly-rustc/rustc_borrowck/index.html) crate. The main entry point is the `mir_borrowck` query.
+
+```mermaid {scale: 0.4, alt: 'A simple sequence diagram'}
+%%{init: {"flowchart": {"htmlLabels": false}} }%%
+graph
+    A[Create Local MIR Copy] 
+    B[Replace Regions in MIR]
+    C[Dataflow Analysis]
+    D[Second Type Check]
+    E[**Region Inference**]
+    F[Compute Borrows in Scope]
+    G[Second Walk Over MIR and Error Reporting]
+
+    subgraph MIR Processing Steps
+        A --> B --> C --> D --> E --> F --> G
+    end
+
+    %% Step Descriptions
+    A:::stepDesc
+    B:::stepDesc
+    C:::stepDesc
+    D:::stepDesc
+    E:::stepDesc
+    F:::stepDesc
+    G:::stepDesc
+
+    classDef stepDesc fill:#e0f7fa,stroke:#00796b,stroke-width:2px;
+```
+During `Region Inference` process, the compilers will conduct:
+- Constraint Propagation
+- Lifetime Parameters Checking
+- Member Constraints Checking
+- ...
+
+</template>
+
+</v-switch>
+
+
+---
+level: 2
+---
 # Lifetime
 How long does the data live? How does Rust compiler analyze it?
 
@@ -255,31 +354,94 @@ fn get_str<'a>() -> &'a str { // Also can be written as <'static>
     s
 }
 ```
-In this case, the lifetime of the string <code>s</code> is static, meaning it lasts for the entire program execution. The lifetime of the string is not bound by any specific scope.
+In this case, the lifetime of the string `s` is static, meaning it lasts for the entire program execution. The lifetime of the string is not bound by any specific scope.
 
 </template>
 <template #2>
 
 ## Lifetime in function
-
 ```rust
 fn echo<'a, 'b>(content: &'b str) -> &'a str {
-    content // 编译错误：引用变量本身的生命周期超过了它的借用目标
+    content
 }
 fn longer<'a, 'b>(s1: &'a str, s2: &'b str) -> &'a str {
     if s1.len() > s2.len()
         { s1 }
     else
-        { s2 }//编译错误：生命周期不匹配
+        { s2 }
 }
-
+// error: lifetime may not live long enough
 ```
-
-
+```rust
+fn echo<'a, 'b: 'a>(content: &'b str) -> &'a str {
+    content
+}
+fn longer<'a, 'b: 'a>(s1: &'a str, s2: &'b str) -> &'a str {
+    if s1.len() > s2.len()
+        { s1 }
+    else
+        { s2 }
+}
+// Mark that 'b is at least as long as 'a
+```
 </template>
 <template #3>
 
 ## Lifetime in struct
+
+```rust
+struct G<'a>{ m:&'a str}
+ 
+fn get_g() -> () {
+    let g: G;
+    {
+        let  s0 = "Hi".to_string();
+        let  s1 = s0.as_str();
+        g = G{ m: s1 };
+    }
+    println!("{}", g.m);
+}
+```
+The lifetime definition of a struct ensures that, within an instance of the struct, the lifetime of its reference members is at least as long as the lifetime of the struct instance itself.
+
+</template>
+</v-switch>
+
+---
+level: 2
+---
+# Lifetime Checker in Rust Compilers
+In a function definition, the compiler does not know what the actual calling context of the function will be in the future. The lifetime parameters essentially serve as a **contract** between the function context and the caller context regarding the lifetimes of the parameters.
+<v-switch>
+<template #1>
+
+### Lifetime checking in the function definition context
+
+The return value's lifetime annotation in a function signature can be any of the input annotations, as long as it ensures that **the temporary variable derived from the input parameters has a lifetime equal to or longer than the return value's lifetime annotation** in the function signature. 
+
+```rust
+fn bad_fn<'a>() -> &'a V{
+    let a = V{v:10};
+    let ref_a = &a;
+    ref_a
+}
+```
+
+</template>
+<template #2>
+
+### Lifetime checking in the caller context
+
+In the caller context, the variable `res` that receives the borrowed value returned by the function cannot have a lifetime longer than the lifetime of the returned borrow (which is derived from the input borrowed parameters). Otherwise, `res` would become a dangling pointer after the input parameters go out of scope.
+
+```rust
+let res: &str;
+{
+    let s = String::from("reload");
+    res = remove_prefix(&s, "re") // s us out of scope
+}
+println!("{}", res);
+```
 
 </template>
 </v-switch>
