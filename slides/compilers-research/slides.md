@@ -3,7 +3,7 @@ theme: seriph
 class: text-center
 drawings:
   persist: false
-transition: slide-left
+transition: fade-out
 mdc: true
 overviewSnapshots: true
 background: ferris.jpg

@@ -8,6 +8,8 @@ Using this, we try to demonstrate how static analysis works.
 level: 2
 ---
 # Preface
+Good prgrammers select language, while great language selects programmers.
+
 **Ownership** and **lifetimes** are core concepts in the Rust language. In fact, these concepts exist not only in Rust but also in C/C++. Nearly all memory safety issues stem from the incorrect use of ownership and lifetimes. Any programming language that does not use garbage collection to manage memory faces these challenges. 
 
 <v-click>
@@ -23,6 +25,7 @@ I believe that these concepts are still way too abstract to understand. But I al
 level: 2
 ---
 # A Simple Example
+Write you a Rust for safe
 
 **Ownership** means control over a memory region associated with a variable. This region can exist in various memory locations (like heap, stack, or code segment). In high-level languages, accessing these memory regions typically requires associating them with variables, unlike in low-level languages where direct access is possible.
 
@@ -39,7 +42,7 @@ int main() {
 }
 ```
 
-```cpp {1-12,14-15|13}
+```cpp {1-11,14-15|12-13}
 #include <iostream>
 using namespace std;
 
@@ -57,7 +60,7 @@ int main() {
 }
 ```
 
-```cpp {1-12,14-15|13}
+```cpp {1-11,14-15|12-13}
 #include <iostream>
 using namespace std;
 
@@ -75,7 +78,7 @@ int main() {
 }
 ```
 
-```cpp {1-12,14-15|13}
+```cpp {1-11,14-15|12-13}
 #include <iostream>
 using namespace std;
 
@@ -94,16 +97,13 @@ int main() {
 ```
 ````
 
-<v-click>
-The five problems demonstrated in the code snippets are: Buffer overflow, Segmentation fault, Dereferencing null pointer, Dangling pointer, Invalid memory deallocation.
-</v-click>
-
 ---
 level: 2
 ---
 # How do Rust cope with such problems?
+From C++ to Rust
 
-In Rust, the **ownership** concept comes with binding instead of assigning likewise in C++. Like in the following examples:
+In Rust, the **ownership** concept comes with binding instead of assigning likewise in C++.
 
 ````md magic-move {lines: true}
 ```cpp
@@ -128,7 +128,8 @@ fn main() {
     let a = 2;              /* Rebinding */
     println!("&a:{:p}",&a); /* 0x9cf9a4 */ 
 }
-// In this case, the address of `a` changes. An immutable binding means that a variable is bound to a memory address and given ownership.
+// In this case, the address of `a` changes.
+// An immutable binding means that a variable is bound to a memory address and given ownership.
 ```
 
 ```rust {*|2}
@@ -142,7 +143,8 @@ fn main() {
     let b = 2;              /* Rebinding */
     println!("&b:{:p}",&b); /* 0x9cfba4 */
 }
-// In this case, the address of `b` remains the same. A mutable binding allows the variable to modify the data in the associated memory region.
+// In this case, the address of `b` remains the same.
+// A mutable binding allows the variable to modify the data in the associated memory region.
 ```
 ````
 <v-click>
