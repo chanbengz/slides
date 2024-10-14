@@ -174,7 +174,7 @@ fn main() {
     let mut a = 1;
     let im_ref = &a;        // Unmutable borrowing
     let mut_ref = & mut a;  // Mutable borrowing
-    println!("{}",im_ref.v); 
+    println!("{}",im_ref); 
     //[At line 4] error[E0502]: cannot borrow `a` as mutable because it is also borrowed as immutable
 }
 ```
@@ -182,10 +182,9 @@ fn main() {
 ```rust
 fn main() {
     let mut a = 1;
-    let im_ref = &a;        // Unmutable borrowing
     let mut_ref = & mut a;  // Mutable borrowing
-    println!("{}",f.v);
-    println!("{}",mut_ref.v); 
+    println!("{}",a);
+    println!("{}",mut_ref); 
     //[At line 5] error[E0507]: cannot move out of `a` because it is borrowed
 }
 ```
