@@ -30,7 +30,7 @@ Write you a Rust for safe
 **Ownership** means control over a memory region associated with a variable. This region can exist in various memory locations (like heap, stack, or code segment). In high-level languages, accessing these memory regions typically requires associating them with variables, unlike in low-level languages where direct access is possible.
 
 ````md magic-move {lines: true}
-```cpp {1-6,8-9|7}
+```cpp {*|6-7}
 #include <iostream>
 using namespace std;
 
@@ -42,7 +42,7 @@ int main() {
 }
 ```
 
-```cpp {1-11,14-15|12-13}
+```cpp {*|12-13}
 #include <iostream>
 using namespace std;
 
@@ -60,7 +60,7 @@ int main() {
 }
 ```
 
-```cpp {1-11,14-15|12-13}
+```cpp {*|12-13}
 #include <iostream>
 using namespace std;
 
@@ -78,7 +78,7 @@ int main() {
 }
 ```
 
-```cpp {1-11,14-15|12-13}
+```cpp {*|12-13}
 #include <iostream>
 using namespace std;
 
@@ -348,12 +348,14 @@ level: 2
 <template #1>
 
 ## Static Lifetime
+
 ```rust
 fn get_str<'a>() -> &'a str { // Also can be written as <'static>
     let s = "hello";
     s
 }
 ```
+
 In this case, the lifetime of the string `s` is static, meaning it lasts for the entire program execution. The lifetime of the string is not bound by any specific scope.
 
 </template>

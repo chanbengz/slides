@@ -7,16 +7,17 @@ layout: section
 ---
 level: 2
 ---
+
 # Why Rust?
 What we talk when we talk about Rust?
 
 When we talk about Rust, we refer to words like **memory safety**, **efficiency**, **expressiveness**, **open-source** and so on... Nowadays, when we talk about system safety, we can't avoid mentioning Rust.
 ### What makes Rust different from other languages?
 Rust Compiler `rustc` may give you the answers.
-<v-click> 
+<v-clicks> 
 <li> 🛠 It has a very powerful frontend system whereas the backend is backed up by the famous <span v-mark.underline.orange="1">LLVM</span>. (The same backend for compilers like clang/intel DPC/C++ compilers)</li>
 <li> 🤔 The explicit definition of ownership enables the compiler to perform <span v-mark.underline.orange="2">static analysis</span> on the code, resolving issues only using frontend. </li>
-</v-click>
+</v-clicks>
 
 ---
 level: 2
