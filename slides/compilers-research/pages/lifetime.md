@@ -184,7 +184,7 @@ fn main() {
     let mut a = 1;
     let im_ref = &a;        // Unmutable borrowing
     let mut_ref = & mut a;  // Mutable borrowing
-    println!("{}",f.v);
+    println!("{}",a.v);
     println!("{}",mut_ref.v); 
     //[At line 5] error[E0507]: cannot move out of `a` because it is borrowed
 }
