@@ -99,24 +99,20 @@ fn main() {
 <div v-click="2">
 
 ```rust
-error[E0382]: borrow of moved value: `a`
- --> src/main.rs:4:18
+error[E0384]: cannot assign twice to immutable variable `a`
+ --> src/main.rs:3:5
   |
-2 |     let a = String::from("Hello, World! ");
-  |         - move occurs because `a` has type `String`, which does not implement the `Copy` trait
-3 |     let b = a;
-  |             - value moved here
-4 |     print!("{}", a);
-  |                  ^ value borrowed here after move
+2 |     let a = 5;
+  |         - first assignment to `a`
+3 |     a += 1;
+  |     ^^^^^^ cannot assign twice to immutable variable
   |
-  = note: this error originates in the macro `$crate::format_args` which comes from the expansion of the macro `print`
-(in Nightly builds, run with -Z macro-backtrace for more info)
-help: consider cloning the value if the performance cost is acceptable
+help: consider making this binding mutable
   |
-3 |     let b = a.clone();
-  |              ++++++++
+2 |     let mut a = 5;
+  |         +++
 
-For more information about this error, try `rustc --explain E0382`.
+For more information about this error, try `rustc --explain E0384`.
 ```
 
 </div>
