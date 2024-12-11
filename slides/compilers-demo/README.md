@@ -1,11 +1,11 @@
-# Welcome to [Slidev](https://github.com/slidevjs/slidev)!
+# CS323 Compilers Final Seminar
 
-To start the slide show:
+Sharing our experience of building a SPL compiler with Rust, LALRPOP and Logos. 
 
-- `npm install`
-- `npm run dev`
-- visit <http://localhost:3030>
+Additionally, our redesigned grammar of SPL to be capatible with LALRPOP.
 
-Edit the [slides.md](./slides.md) to see the changes.
+## Team Members
 
-Learn more about Slidev at the [documentation](https://sli.dev/).
+[Jaredan Xiao](https://github.com/Jaredanwolfgang)
+[Ben Chen](https://github.com/chanbengz)
+[Jiarun Zhu](https://github.com/Ray0v0)

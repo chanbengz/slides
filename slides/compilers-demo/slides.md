@@ -20,10 +20,22 @@ layoutClass: gap-16
 ---
 # Table of contents
 
-<Toc v-click minDepth="1" maxDepth="5" columns="2"></Toc>
+<Toc v-click minDepth="1" maxDepth="5" columns="1"></Toc>
 
 ---
 src: ./pages/intro.md
+---
+
+---
+src: ./pages/lex-parse.md
+---
+
+---
+src: ./pages/semantic.md
+---
+
+---
+src: ./pages/llvm.md
 ---
 
 ---

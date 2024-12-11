@@ -1,11 +1,10 @@
-# Welcome to [Slidev](https://github.com/slidevjs/slidev)!
+# CS323 Compilers Research Presentation
 
-To start the slide show:
+Introduction to the Rust Programming Language with its unique concepts of ownership, borrowing, and lifetimes.
 
-- `npm install`
-- `npm run dev`
-- visit <http://localhost:3030>
+## Team Members
 
-Edit the [slides.md](./slides.md) to see the changes.
+[Jaredan Xiao](https://github.com/Jaredanwolfgang)
+[Ben Chen](https://github.com/chanbengz)
+[Jiarun Zhu](https://github.com/Ray0v0)
 
-Learn more about Slidev at the [documentation](https://sli.dev/).
