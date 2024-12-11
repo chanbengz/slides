@@ -31,6 +31,10 @@ src: ./pages/lex-parse.md
 ---
 
 ---
+src: ./pages/ast.md
+---
+
+---
 src: ./pages/semantic.md
 ---
 

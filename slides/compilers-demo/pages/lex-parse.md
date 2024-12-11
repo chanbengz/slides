@@ -389,31 +389,3 @@ pub CompExpr: Box<tree::CompExpr> = {
     <l:CompExpr> "-" <r:CompExpr> => l - r,
 };
 ```
-
----
-level: 2
----
-# Strong Typing
-又挖了一个大坑
-
-我们做的第一个限制，if/while里面的条件必须是bool类型
-
-```
-CondExpr -> CondTerm | CompExpr OpEqual CompExpr | CompExpr OpNotEqual CompExpr | CompExpr OpLessThan CompExpr
-    // ...
-    CondExpr OpEqual CondExpr | CondExpr OpAnd CondExpr | CondExpr OpOr CondExpr | OpNot CondExpr
-
-CondTerm -> LiteralBool | LeftParen CondExpr RightParen
-```
-
-第二个限制，左值一定是变量。我们写了一个production专门处理变量的声明和赋值
-
-```
-VarManagement -> VarDecs | VarAssigns
-VarDecs -> Specifier VarDecList
-VarAssigns -> VarAssign COMMA VarAssigns | VarAssign
-VarAssign -> Identifier AssignOp CompExpr // +
-```
-
-缺点就是我们不支持这种`a = b = 1`的赋值，也不支持`1 + 2;`这种无意义的statement, i.e., 我们的stmt没有返回值, 
-不是形如`Stmt -> Expr SEMI`这种语法。
