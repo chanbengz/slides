@@ -294,7 +294,7 @@ level: 2
 # Error Recovery
 Monad God 曾说过：开源parser错误处理很玄学
 
-回顾一下Error Recovery的原理：parser在当前的state遇到了在表内没有action的token，就会产生一个特殊的error token，然后再通过特殊的规则来处理带有error token的production。A trivial example:
+回顾一下Error Recovery的原理：parser在当前的state遇到了表内没有action的token，就会产生一个特殊的error token，然后再通过特殊的规则来处理带有error token的production, lalrpop用`!`表示error。A trivial example:
 
 ```rust
 pub CompExpr: Box<tree::CompExpr> = {
@@ -338,11 +338,34 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 <img src="https://chanbengz.github.io/slides/compilers-demo/pr.png" width="450"/>
 </div>
 
+https://lalrpop.github.io/lalrpop/lexer_tutorial/006_error_recovery_custom_lexer.html
+
 ---
 level: 2
 ---
 # Solving Ambiguity
 To shift or to reduce, that is the question.
+
+lalrpop的文法必须没有二义性，于是dangling-else问题就必须要解决
+```
+Stmt -> CompSt
+    | IF LP Exp RP Stmt
+    | IF LP Exp RP Stmt ELSE Stmt
+```
+
+用课上教的文法变换一下
+
+```
+Stmt -> OpenStmt | ClosedStmt
+
+OpenStmt -> IF LP Exp RP Stmt 
+    | IF LP Exp RP ClosedStmt ELSE OpenStmt
+
+ClosedStmt -> CompSt
+    | IF LP Exp RP ClosedStmt ELSE ClosedStmt
+    | WHILE LP Exp RP Stmt
+    ...
+```
 
 ---
 level: 2
@@ -367,3 +390,30 @@ pub CompExpr: Box<tree::CompExpr> = {
 };
 ```
 
+---
+level: 2
+---
+# Strong Typing
+又挖了一个大坑
+
+我们做的第一个限制，if/while里面的条件必须是bool类型
+
+```
+CondExpr -> CondTerm | CompExpr OpEqual CompExpr | CompExpr OpNotEqual CompExpr | CompExpr OpLessThan CompExpr
+    // ...
+    CondExpr OpEqual CondExpr | CondExpr OpAnd CondExpr | CondExpr OpOr CondExpr | OpNot CondExpr
+
+CondTerm -> LiteralBool | LeftParen CondExpr RightParen
+```
+
+第二个限制，左值一定是变量。我们写了一个production专门处理变量的声明和赋值
+
+```
+VarManagement -> VarDecs | VarAssigns
+VarDecs -> Specifier VarDecList
+VarAssigns -> VarAssign COMMA VarAssigns | VarAssign
+VarAssign -> Identifier AssignOp CompExpr // +
+```
+
+缺点就是我们不支持这种`a = b = 1`的赋值，也不支持`1 + 2;`这种无意义的statement, i.e., 我们的stmt没有返回值, 
+不是形如`Stmt -> Expr SEMI`这种语法。
