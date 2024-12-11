@@ -41,5 +41,7 @@ src: ./pages/llvm.md
 ---
 layout: center
 ---
-# Thank you!
+# Thanks
+
+项目链接 https://github.com/chanbengz/SUSTech_CS323_Project_Incredibuild
 
