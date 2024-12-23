@@ -165,7 +165,9 @@ pub enum SemanticError {
 pub struct SemanticErrorManager {
     cnt: usize,
     errors: Vec<SemanticError>,
-    line: usize, // When traversing a node that contains location information, update the line number. The locality of errors might not be precise, but it is enough for debugging.
+    line: usize, 
+    // When traversing a node that contains location information, update the line number using Span. 
+    // The locality of errors might not be precise, but it is enough for debugging.
 }
 ```
 </template>
