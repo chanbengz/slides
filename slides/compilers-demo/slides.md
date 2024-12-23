@@ -39,10 +39,6 @@ src: ./pages/semantic.md
 ---
 
 ---
-src: ./pages/llvm.md
----
-
----
 layout: center
 ---
 # Thanks
