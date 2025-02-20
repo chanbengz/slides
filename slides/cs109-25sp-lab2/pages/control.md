@@ -79,6 +79,52 @@ level: 2
 <img src="https://github.com/zhuym1219/java-basic-materials/blob/master/pictures/Part03-switch.png?raw=true" width="400"/>
 
 ---
+level: 2
+---
+# Switch Case Example
+一个注意力集中的例子
+
+如果我们要根据成绩计算等级, 100-90是A, 89-80是B, 79-70是C, 69-60是D, 59-0是F
+
+````md magic-move {lines: true}
+```java
+int score = scanner.nextInt();
+char grade;
+
+if (score >= 90) {
+    grade = 'A';
+} else if (score >= 80) {
+    grade = 'B';
+} else if (score >= 70) {
+    grade = 'C';
+} else if (score >= 60) {
+    grade = 'D';
+} else {
+    grade = 'F';
+}
+```
+
+```java
+int score = scanner.nextInt();
+char grade;
+
+switch (score / 10) {
+    case 10:
+    case 9:
+        grade = 'A'; break;
+    case 8:
+        grade = 'B'; break;
+    case 7:
+        grade = 'C'; break;
+    case 6:
+        grade = 'D'; break;
+    default:
+        grade = 'F';
+}
+```
+````
+
+---
 layout: two-cols
 level: 2
 ---
