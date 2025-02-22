@@ -79,6 +79,86 @@ level: 2
 <img src="https://github.com/zhuym1219/java-basic-materials/blob/master/pictures/Part03-switch.png?raw=true" width="400"/>
 
 ---
+layout: two-cols
+level: 2
+---
+# If Else Example
+
+```java
+int n = scanner.nextInt();
+if (n % 2 == 0) {
+    System.out.println("n is even");
+} else {
+    System.out.println("n is odd");
+}
+```
+
+````md magic-move {lines: true}
+```java
+boolean b = false;
+if (b == false)
+    System.out.println("hihi");
+else if (b)
+    System.out.println("haha");
+if (b = true) // error! 
+    System.out.println("hi hi");
+```
+
+```java
+boolean b = false;
+if (!b)
+    System.out.println("hihi");
+else if (b)
+    System.out.println("haha");
+if (b = true) // error! 
+    System.out.println("hi hi");
+```
+````
+
+````md magic-move
+```java
+// Dont do this!
+if (a == 2)
+    if (b == 3)
+        if (c == 4)
+            System.out.println("a, b, c = 2, 3, 4");
+        else
+            System.out.println("c is not 4")
+```
+
+```java
+// Do this
+if (a == 2 && b == 3 && c == 4)
+    System.out.println("a, b, c = 2, 3, 4");
+else
+    System.out.println("c is not 4")
+System.out.println("END")
+```
+````
+
+::right::
+
+<br>
+<br>
+
+- condition是逻辑表达式, 即返回值为boolean的表达式
+- if 语句没有`;`
+- `=`是赋值语句, `==`才是比较
+
+<br>
+
+- 如果变量是boolean类型, 可以直接用
+- `!` 给condition去反, 即"否"的意思
+
+<br>
+<br>
+<br>
+
+- 尽量不要写太多的嵌套if-else
+- else 跟随最近的if, 用缩进更容易辨认
+- 没有`{}`时,只有一行语句会被执行
+
+---
 level: 2
 ---
 # Switch Case Example
@@ -148,7 +228,7 @@ while (true) {
     System.out.println("n=" + n);
     n++;
     if (n > 5) break;
-}
+} // no ; at the end
 System.out.println("END");
 ```
 
