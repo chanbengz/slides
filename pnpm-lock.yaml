@@ -68,6 +68,21 @@ importers:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.7.3)
 
+  slides/cs109-25sp-lab6:
+    dependencies:
+      '@slidev/cli':
+        specifier: ^51.3.0
+        version: 51.3.0(@babel/parser@7.26.9)(@nuxt/kit@3.13.2(rollup@4.34.8))(@types/markdown-it@14.1.2)(@types/node@18.19.53)(@vue/compiler-sfc@3.5.13)(markdown-it-async@2.0.0)(postcss@8.5.2)(rollup@4.34.8)(tsx@4.19.1)
+      '@slidev/theme-default':
+        specifier: latest
+        version: 0.25.0
+      '@slidev/theme-seriph':
+        specifier: latest
+        version: 0.25.0
+      vue:
+        specifier: ^3.5.13
+        version: 3.5.13(typescript@5.7.3)
+
   slides/template:
     dependencies:
       '@slidev/cli':
