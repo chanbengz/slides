@@ -130,9 +130,9 @@ public void main(String[] args) {
 有什么用? 保护数据, 防止外部代码随意修改. 保护接口, 防止外部代码随意调用.
 
 ```java
-public class User{
+public class User {
     private String password;
-    private void verifyPassword(String input) { /* ... */ }
+    private void validatePassword(String input) { /* ... */ }
 }
 ```
 

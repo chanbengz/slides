@@ -71,13 +71,13 @@ level: 2
 
 ```java
 public class User { 
-    static int ustCnt = 0;
+    static int usrCnt = 0;
     private String name, password;
 
     public User(String name, String password) {
         this.name = name;
         this.password = password;
-        ustCnt++;
+        usrCnt++;
     }
 }
 
