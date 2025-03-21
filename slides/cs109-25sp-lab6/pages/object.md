@@ -54,6 +54,33 @@ public static void main(String[] args) {
 ---
 level: 2
 ---
+# NULL Reference
+Nobody likes it
+
+如果你不初始化一个对象，它的值就是null
+
+```java
+Dog myDog; // myDog = null
+myDog.bark(); // NullPointerException
+```
+
+Null, 即"空"，是一个特殊的值，表示没有对象. 相当于没有指向任何对象的引用.
+
+访问一个null对象的属性或方法会导致NullPointerException. 这么做会安全一点
+
+```java
+if (myDog != null) myDog.bark();
+```
+
+如何删除一个对象? 让它变成null就行了
+
+```java
+myDog = null; // it's gone :(
+```
+
+---
+level: 2
+---
 # Shallow & Deep Copy
 就是lab4讲到的引用
 
