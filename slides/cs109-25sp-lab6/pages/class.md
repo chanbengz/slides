@@ -72,24 +72,22 @@ public static void main(String[] args) {
 </div>
 
 ---
-layout: two-cols
+layout: image-right
 level: 2
+image: https://github.com/chanbengz/slides/blob/main/slides/cs109-25sp-lab6/public/BOTTOM.png?raw=true
 ---
-# Bottom-Up or Top-Down?
+# BottomUp or TopDown
 That's the question
 
 大家写Project的时候都会有一个问题, 是先写底层还是先写顶层?
 我的建议
-
-1. Top-Down, 画框架图, 跟队友约定一些接口(即没有实现的方法, 只有函数名和参数)
+1. Top-Down, 画框架图, 跟队友约定一些接口
 2. Bottom-Up, 先写底层的类, 然后再写顶层的类
-3. Top-Down, 写完之后测试, 用debug来跟踪代码的执行流程, 确保与预想的一致
+3. Top-Down, 写完之后测试跟踪代码的执行流程
 
-<img src="https://github.com/chanbengz/slides/blob/main/slides/cs109-25sp-lab6/public/TOP.png?raw=true" width="400">
-
-::right::
-
-<img src="https://github.com/chanbengz/slides/blob/main/slides/cs109-25sp-lab6/public/BOTTOM.png?raw=true" width="400">
+<div v-click=1>
+<img src="https://github.com/chanbengz/slides/blob/main/slides/cs109-25sp-lab6/public/TOP.png?raw=true" width="300" align="middle">
+</div>
 
 ---
 level: 2
@@ -97,10 +95,72 @@ level: 2
 # Public & Private Members
 控制访问权限
 
+Public, 任何class外部的代码都可以访问. Private, 只有class内部的代码可以访问.
+
+````md magic-move {lines: true}
+```java
+public class A {
+    public int x;
+    public void func() { /* ... */ }
+}
+
+public void main(String[] args) {
+    A a = new A();
+    a.x = 5;
+    a.func();
+}
+```
+
+```java
+public class A {
+    private int x;
+    private void func() { /* ... */ }
+}
+
+public void main(String[] args) {
+    A a = new A();
+    a.x = 5;  // error, x is private
+    a.func(); // error, func is private
+}
+```
+````
+
+<div v-click=2>
+
+有什么用? 保护数据, 防止外部代码随意修改. 保护接口, 防止外部代码随意调用.
+
+```java
+public class User{
+    private String password;
+    private void verifyPassword(String input) { /* ... */ }
+}
+```
+
+</div>
+
 ---
 level: 2
 ---
 # Class as a File
 一个非常极端的OOP
 
-Import
+Java 中一个`public class`对应一个文件, 不带`public`的类外部无法使用.
+
+为什么这样? 因为文件结构即代码结构, 比如我们调用在其他代码文件里写好的类, 只需要`import`这个类
+
+```java
+/* com/
+ *  └── example/
+ *      └── MyClass.java
+ */
+
+import com.example.MyClass;
+
+public class Main {
+    public static void main(String[] args) {
+        MyClass obj = new MyClass();
+    }
+}
+```
+
+Main 永远不是必须的. 你可以写一个library, 然后别人import你的代码.
