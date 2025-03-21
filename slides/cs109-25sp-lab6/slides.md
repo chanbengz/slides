@@ -30,6 +30,10 @@ src: ./pages/method.md
 ---
 
 ---
+src: ./pages/arraylist.md
+---
+
+---
 layout: section
 ---
 # Exercise
@@ -39,11 +43,13 @@ level: 2
 ---
 ## Exercise 1
 
+实现一个简单的仓库`VelvetRoom`, 用户存储/删除/显示`Persona`对象, 即实现
+- `VelvetRoom()` 作为构造函数, 初始化一个空的`ArrayList<Persona>`
+- `void addPersona(Persona persona)` 添加一个`Persona`对象到`ArrayList`
+- `void destroyPersona(String name)` 根据`name`从`ArrayList`中删除一个`Persona`对象
+- `void showPersonas()` 打印所有`Persona`对象
 
-
-## Exercise 2
-
-
+每个`Persona`有`name`, `level` 和 `arcana`属性, `toString` 可以用任意格式输出。
 
 ---
 layout: section
